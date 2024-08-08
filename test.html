@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>test</title>
+    <style>
+        body{
+            position:relative;
+        }
+        .subtitle_word{
+            position:relative;
+        }
+        .subtitle_hover,#contextMenu{
+            position:absolute;
+            left:0;
+            width:max-content;
+            height:max-content;
+            background-color:rgba(255,255,255,0.75);
+            backdrop-filter: blur(10px);
+            color:black;
+            align-items:center;
+            font-size:20px;
+            display:flex;
+            flex-direction: column;
+            /*text-shadow: none !important;*/
+            font-family: sans-serif;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 10px;
+
+            max-height:300px;
+            max-width:300px;
+            overflow-y:auto;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+
+        }
+        .subtitle_hover.dark,#contextMenu.dark{
+            background-color: rgba(53, 55, 68, 0.75);
+            color: #f3efef;
+            text-shadow: 0 1px 0 rgba(53, 55, 68, 0.4) !important;
+        }
+        hr{
+            /*margin: 10px 0;*/
+            margin-top:20px;
+            margin-bottom:20px;
+            border: 0;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        .asbplayer-subtitles-container-top{
+            position:absolute;
+        }
+
+        #contextMenu #settingsForm{
+            display:flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        #contextMenu #settingsForm .row{
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #contextMenu #settingsForm .colour-row{
+            margin-left:20px;
+        }
+        #contextMenu #settingsForm input{
+            width: 75px;
+        }
+    </style>
+</head>
+<body>
+    <div class="asbplayer-subtitles-container-top" style="left: 391px; max-width: 625.594px; top: 400px;"><div class="asbplayer-subtitles"><span class="" style="color: #ffffff !important;font-size: 36px !important;font-weight: 700 !important;text-shadow: 0 0 3px #000000, 0 0 3px #000000, 0 0 3px #000000, 0 0 3px #000000 !important">次の手を考えなければ… なんだ　簡単に開く... （高木(たかぎ)）ねえ 西片
+（西片）うっ</span>
+    </div></div>
+
+
+
+    <script src="main.js"></script>
+</body>
+</html>
+
+
+

@@ -205,7 +205,18 @@ def get_translation(req: TranslationRequest):
     JishoCache[req.word] = {"data": data['data']}
     return {"data": data['data']}
 
+class ControlRequest(BaseModel):
+    function: str
 
+@app.post("/control")
+def control(req: ControlRequest):
+    if req.function == "ping":
+        return {"response": "pong"}
+    elif req.function == "reload":
+        get_all_cards()
+        return {"response": "Reloaded"}
+    else:
+        return {"response": "Unknown function"}
 
 
 

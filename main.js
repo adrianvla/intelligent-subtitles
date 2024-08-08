@@ -2,7 +2,7 @@ let getCardUrl = "http://127.0.0.1:8000/getCard";
 let tokeniserUrl = "http://127.0.0.1:8000/tokenize";
 let getTranslationUrl = "http://127.0.0.1:8000/translate";
 
-const style = `body{position:relative}.subtitle_word{position:relative}.subtitle_hover{position:absolute;left:0;width:max-content;height:max-content;background-color:rgba(255,255,255,0.75);backdrop-filter: blur(10px);color:black;align-items:center;font-size:20px;display:flex;flex-direction:column;font-family:sans-serif;box-shadow:0 0 10px 0 rgba(0,0,0,0.5);padding:10px;border-radius:10px;max-height:300px;max-width:300px;overflow-y:auto;text-shadow:0 1px 0 rgba(255, 255, 255, 0.4) !important}hr{margin-top:20px;margin-bottom:20px;border:0;border-top:1px solid rgba(0,0,0,0.1)}.asbplayer-subtitles-container-top{position:absolute}`;
+const style = `body{position:relative}.subtitle_word{position:relative}#contextMenu,.subtitle_hover{position:absolute;left:0;width:max-content;height:max-content;background-color:rgba(255,255,255,0.75);backdrop-filter: blur(10px);color:black;align-items:center;font-size:20px;display:flex;flex-direction:column;font-family:sans-serif;box-shadow:0 0 10px 0 rgba(0,0,0,0.5);padding:10px;border-radius:10px;max-height:300px;max-width:300px;overflow-y:auto;text-shadow:0 1px 0 rgba(255, 255, 255, 0.4) !important}#contextMenu.dark,.subtitle_hover.dark{background-color:rgba(53, 55, 68, 0.75);color:#f3efef;text-shadow:0 1px 0 rgba(53, 55, 68, 0.4) !important}hr{margin-top:20px;margin-bottom:20px;border:0;border-top:1px solid rgba(0,0,0,0.1)}.asbplayer-subtitles-container-top{position:absolute}#contextMenu #settingsForm{display:flex;flex-direction:column;gap:10px}#contextMenu #settingsForm .row{padding:5px;display:flex;justify-content:space-between;align-items:center}#contextMenu #settingsForm .colour-row{margin-left:20px}#contextMenu #settingsForm input{width:75px}`;
 
 
 let settings = {
@@ -20,7 +20,8 @@ let settings = {
         "助動詞":"#ffefd1",
         "形状詞":"#def6ff",
         "副詞": "#b8cdf5",
-    }
+    },
+    "dark_mode":true
 };
 
 
@@ -82,7 +83,6 @@ function getTranslation(text){
         xhr.send(JSON.stringify({"word":text}));
     });
 }
-
 // download and run jquery
 function loadJquery(){
     return new Promise((resolve, reject) => {
@@ -109,7 +109,35 @@ let lastSubTranslationElements = [];
 const randomUUID = () => {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 };
+
+let SERVER_ONLINE = true;
+
+const ping = () => {
+    return new Promise((resolve, reject) => {
+        //POST to /control req.function = "ping"
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://127.0.0.1:8000/control', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                const response = JSON.parse(xhr.responseText);
+                if(response.status == "error") {
+                    SERVER_ONLINE = false;
+                }else{
+                    SERVER_ONLINE = true;
+                }
+                resolve();
+            }
+        }
+        const data = JSON.stringify({ "function": "ping" });
+        xhr.send(data);
+    });
+};
+
 const modify_sub = async () => {
+
+    ping();
+
     // get the text of the subtitle
     if($(".asbplayer-subtitles-container-top > .asbplayer-subtitles").hasClass("isBeingProcessed")) return;
 
@@ -127,7 +155,7 @@ const modify_sub = async () => {
         let pos = token[1];
         let uuid = randomUUID();
         let newEl = $(`<span class="subtitle_word word_${uuid}" style="color: #ffffff !important;font-size: 36px !important;font-weight: 700 !important;text-shadow: 0 0 3px #000000, 0 0 3px #000000, 0 0 3px #000000, 0 0 3px #000000 !important">${word}</span>`);
-        let hoverEl = $(`<div class="subtitle_hover hover_${uuid}" style="display:none"></div>`);
+        let hoverEl = $(`<div class="subtitle_hover hover_${uuid} ${settings.dark_mode ? 'dark' : ''}" style="display:none"></div>`);
         let hoverEl_html = "";
         let doAppend = false;
         let doAppendHoverLazy = false;
@@ -140,30 +168,6 @@ const modify_sub = async () => {
             console.log("card_data.poor: ",card_data.poor);
             if(card_data.poor){ //card not found
                 show_subtitle = true;
-                // doAppend = true;
-                // //translate using api
-                // let translation_data = await getTranslation(word);
-                // translation_data.data.forEach((meaning)=>{
-                //     let reading_html = meaning.japanese[0].reading;
-                //     let translation_html = meaning.senses[0].english_definitions.join(", ");
-                //     hoverEl_html += `<div class="hover_translation">${translation_html}</div>`;
-                //     hoverEl_html += `<div class="hover_reading">${reading_html}</div>`;
-                // });
-                // // console.log(reading_html)
-                // // let translation_html = translation_data.data[0].senses[0].english_definitions.join(", ");
-                // // hoverEl.find(".hover_translation").html(translation_html);
-                // // hoverEl.find(".hover_reading").html(reading_html);
-                // newEl.attr("known","false");
-                // //furigana
-                // if(translation_data.data.length){
-                //     let reading_text = translation_data.data[0].japanese[0].reading;
-                //     // remove when see <!-- accent_start -->
-                //     let accent_start = reading_text.indexOf("<!-- accent_start -->");
-                //     if(accent_start != -1){
-                //         reading_text = reading_text.substring(0,accent_start);
-                //     }
-                //     newEl.html(`<ruby>${word}<rt>${reading_text}</rt></ruby>`);
-                // }
                 doAppendHoverLazy=true;
             }else{
                 //compare ease
@@ -278,14 +282,101 @@ const modify_sub = async () => {
 
 };
 
+const create_context_menu = () => {
+    // Create context menu
+    let contextMenu = $(`
+        <div id="contextMenu" class="${settings.dark_mode ? 'dark' : ''}" style="display:none">
+            <form id="settingsForm">
+                <div class="row">
+                    <label for="known_ease_threshold">Known Ease Threshold: </label>
+                    <input type="number" id="known_ease_threshold" name="known_ease_threshold" value="${settings.known_ease_threshold}">
+                </div>
+                <div class="row">
+                    <label for="blur_words">Blur Words: </label>
+                    <input type="checkbox" id="blur_words" name="blur_words" ${settings.blur_words ? 'checked' : ''}>
+                </div>
+                <div class="row">
+                    <label for="blur_known_subtitles">Blur Known Subtitles: </label>
+                    <input type="checkbox" id="blur_known_subtitles" name="blur_known_subtitles" ${settings.blur_known_subtitles ? 'checked' : ''}>
+                </div>
+                <div class="row">
+                    <label for="blur_amount">Blur Amount: </label>
+                    <input type="number" id="blur_amount" name="blur_amount" value="${settings.blur_amount}">
+                </div>
+                <div class="row">
+                    <label for="colour_known">Colour Known: </label>
+                    <input type="color" id="colour_known" name="colour_known" value="${settings.colour_known}">
+                </div>
+                <div class="row">
+                    <label for="do_colour_known">Do Colour Known: </label>
+                    <input type="checkbox" id="do_colour_known" name="do_colour_known" ${settings.do_colour_known ? 'checked' : ''}>
+                </div>
+                <div class="row">
+                    <label for="do_colour_codes">Do Colour Codes: </label>
+                    <input type="checkbox" id="do_colour_codes" name="do_colour_codes" ${settings.do_colour_codes ? 'checked' : ''}>
+                </div>
+                <input type="submit" value="Save">
+            </form>
+        </div>
+    `);
+    $('body').append(contextMenu);
+    for (let code in settings.colour_codes) {
+        $('#settingsForm').append(`
+            <div class="row colour-row">
+                <label for="${code}">${code}: </label>
+                <input type="color" id="${code}" name="${code}" value="${settings.colour_codes[code]}">
+            </div>
+        `);
+    }
+
+    // Show context menu on right click
+    $('.asbplayer-subtitles-container-top').on('contextmenu', function(e) {
+        e.preventDefault();
+        $('#contextMenu').css({top: e.pageY, left: e.pageX}).show();
+    });
+
+    // Hide context menu on left click
+    $(document).on('click', function() {
+        $('#contextMenu').hide();
+    });
+    $('#contextMenu').on('click', function(e) {
+        e.stopPropagation();
+    });
+
+    // Update settings on form submit
+    $('#settingsForm').on('submit', function(e) {
+        e.preventDefault();
+        $('#contextMenu').hide();
+        settings.known_ease_threshold = Number($('#known_ease_threshold').val());
+        settings.blur_words = $('#blur_words').is(':checked');
+        settings.blur_known_subtitles = $('#blur_known_subtitles').is(':checked');
+        settings.blur_amount = Number($('#blur_amount').val());
+        settings.colour_known = $('#colour_known').val();
+        settings.do_colour_known = $('#do_colour_known').is(':checked');
+        settings.do_colour_codes = $('#do_colour_codes').is(':checked');
+
+        for (let code in settings.colour_codes) {
+            settings.colour_codes[code] = $(`#${code}`).val();
+        }
+
+    });
+};
 
 (async function() {
     await loadJquery();
+    create_context_menu();
     // add style
     let styleElement = document.createElement('style');
     styleElement.innerHTML = style;
     document.head.appendChild(styleElement);
     modify_sub();
+    await ping();
+    if(!SERVER_ONLINE){
+        console.log("Server is offline");
+    }
     // when .asbplayer-subtitles-container-top changes
-    $(document).on('DOMSubtreeModified', '.asbplayer-subtitles-container-top', modify_sub);
+    // $(document).on('DOMSubtreeModified', '.asbplayer-subtitles-container-top', modify_sub);
+    let observer = new MutationObserver(modify_sub);
+    let targetNode = document.querySelector('.asbplayer-subtitles-container-top');
+    observer.observe(targetNode, { childList: true, subtree: true });
 })();
