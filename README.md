@@ -44,6 +44,10 @@ python main.py
 
 Open your favourite website supported by ASB player, then copy the code located in the file main.min.js and paste it in the console (you can open it using right click-> inspect or just press F12).
 
+#### Experimental:
+
+Go to [https://subs.morisinc.net/install.html](https://subs.morisinc.net/install.html) and follow the on-screen instructions. This will lead to the creation of a bookmarklet. 
+
 Enjoy
 
 # How To Use
