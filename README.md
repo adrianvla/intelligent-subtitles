@@ -3,11 +3,17 @@ An addon for ASB player that modifies subtitles based on your registered Anki kn
 
 ![image](https://github.com/user-attachments/assets/9af2dd26-a1c5-4d66-89cb-8094739b5c1a)
 
-<img width="390" alt="Screenshot 2024-08-09 at 16 27 28" src="https://github.com/user-attachments/assets/bc564d48-94cd-409e-a523-3076570c9e9d"> Supports Dark Mode
+<img width="390" alt="Screenshot 2024-08-09 at 16 27 28" src="https://github.com/user-attachments/assets/bc564d48-94cd-409e-a523-3076570c9e9d"> 
 
-<img width="418" alt="Screenshot 2024-08-09 at 16 27 41" src="https://github.com/user-attachments/assets/e03125d4-6ca0-4f7e-989a-ffbd7b6fbbfb"> Settings Menu
+#### Supports Dark Mode
 
-<img width="580" alt="Screenshot 2024-08-09 at 02 08 32" src="https://github.com/user-attachments/assets/c582d750-d830-446b-a608-98c7b432c0e4"> Dictionnary Lookup
+<img width="418" alt="Screenshot 2024-08-09 at 16 27 41" src="https://github.com/user-attachments/assets/e03125d4-6ca0-4f7e-989a-ffbd7b6fbbfb"> 
+
+#### Settings Menu
+
+<img width="580" alt="Screenshot 2024-08-09 at 02 08 32" src="https://github.com/user-attachments/assets/c582d750-d830-446b-a608-98c7b432c0e4"> 
+
+#### Dictionnary Lookup
 
 
 # Features
