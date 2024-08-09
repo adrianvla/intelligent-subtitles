@@ -18,13 +18,14 @@ An addon for ASB player that modifies subtitles based on your registered Anki kn
 
 # Features
 ### Copy-paste the contents main.min.js into the console of a video streaming website to activate
-### Gramatically-analyses japanese subtitles on the fly and colorizes them
-### Displays furigana on not known words
-### Variable difficulty (you can change the minimum Anki ease required for a card to be recognised as "known")
-### Can blur known words
+### Gramatically-analyses subtitles on the fly and colorizes them
+### Displays furigana on unknown words
+### Adjustable difficulty (you can change the minimum Anki ease required for a card to be recognised as "known")
+### Blurs known words
 ### Shows definitions on hover taken directly from your Anki deck (if not found, then from jisho.org)
 ### Every single one of these settings are configurable
 ### Dark Mode
+### Shows the grammatical type of a word
 
 # Setup
 Install the [AnkiConnect](https://ankiweb.net/shared/info/2055492159) plugin in Anki
@@ -48,6 +49,16 @@ Enjoy
 # How To Use
 
 The app should automatically modify the subtitles on the fly. To modify settings, right-click on the subtitles to open a context menu.
+
+# TODO
+
+- Add unknown words to your Anki deck
+- Stats
+- Support for other languages
+
+# Currently Supported languages
+
+- Japanese
 
 # License
 ```
