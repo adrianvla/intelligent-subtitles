@@ -37,17 +37,55 @@
             text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) !important;
 
         }
+        #contextMenu{
+            max-width:none;
+            padding:0;
+        }
+        #contextMenu .row.in label,#contextMenu .row.colour-row label{
+            border-right: 1px solid;
+            width:250px;
+            padding:10px;
+        }
+        #contextMenu .row.in input{
+            width:90px;
+            height:32px;
+            border:0;
+            background:0;
+            font-size:1.5rem;
+        }
+        #contextMenu.dark .row.in input{
+            color:white;
+        }
+        #contextMenu .row.in input:focus{
+            outline:none;
+        }
+        #contextMenu .sep{
+            border-bottom: 1px solid;
+        }
+        .subtitle_hover .hover_reading *, .subtitle_hover .hover_translation *{
+            color:black !important;
+        }
+        .subtitle_hover.dark .hover_reading *, .subtitle_hover.dark .hover_translation *{
+            color: #f3efef !important;
+        }
+        .subtitle_hover.known{
+            box-shadow: rgba(100, 66, 66, 0.16) 0px 1px 4px, rgb(24, 197, 20) 0px 0px 0px 3px;
+        }
         .subtitle_hover.dark,#contextMenu.dark{
-            background-color: rgba(53, 55, 68, 0.75);
+            background-color: rgba(80, 82, 87, 0.83);
             color: #f3efef;
-            text-shadow: 0 1px 0 rgba(53, 55, 68, 0.4) !important;
+            text-shadow: none !important;
         }
         hr{
             /*margin: 10px 0;*/
             margin-top:20px;
             margin-bottom:20px;
             border: 0;
-            border-top: 1px solid rgba(0,0,0,0.1);
+            border-top: 2px solid rgba(0,0,0,0.3);
+            width:100%;
+        }
+        .subtitle_hover.dark hr, #contextMenu.dark hr{
+            border-top: 1px solid rgba(185, 185, 185, 0.1);
         }
         .asbplayer-subtitles-container-top{
             position:absolute;
@@ -56,27 +94,125 @@
         #contextMenu #settingsForm{
             display:flex;
             flex-direction: column;
-            gap: 10px;
+            /*gap: 10px;*/
+        }
+        #contextMenu input[type="button"], #contextMenu input[type="submit"]{
+            margin:10px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            background-color: #9DD997;
+            color: black;
+            cursor: pointer;
+            width:calc(100% - 20px) !important;
         }
         #contextMenu #settingsForm .row{
-            padding: 5px;
+            /*padding: 5px;*/
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom:1px solid;
+            /*padding:10px;*/
+            padding-inline: 10px;
         }
         #contextMenu #settingsForm .colour-row{
-            margin-left:20px;
+            padding-left:20px;
         }
         #contextMenu #settingsForm input{
-            width: 75px;
+            /*width: 75px;*/
         }
+        .hover_reading{
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .hover_ease{
+            margin-top:25px;
+            color: #9DD997 !important;
+        }
+        .subtitle_hover{
+            gap:10px;
+        }
+        .subtitle_hover.dark .pitch{
+            filter:invert(1);
+        }
+        .subtitle_hover[data-pos]::before{
+            position:absolute;
+            bottom:0;
+            right:0;
+            content: attr(data-pos);
+            font-size: 1em;
+            z-index:-1;
+            /*mix-blend-mode: multiply;*/
+            padding:5px;
+            border-top-left-radius:5px;
+            /*backdrop-filter: invert(1);*/
+            background-color: rgba(255,0,0, 0.72);
+        }
+        .checkbox-wrapper-47{
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+  .checkbox-wrapper-47 input[type="checkbox"] {
+    display: none;
+    visibility: hidden;
+  }
+
+  .checkbox-wrapper-47 label {
+    position: relative;
+    padding-left: 2em;
+    padding-right: 1em;
+    line-height: 2;
+    cursor: pointer;
+    display: inline-flex;
+  }
+
+  .checkbox-wrapper-47 label:before {
+    box-sizing: border-box;
+    content: " ";
+    position: absolute;
+    top: 0.3em;
+    left: 0;
+    display: block;
+    width: 1.4em;
+    height: 1.4em;
+    border: 2px solid #9098A9;
+    border-radius: 6px;
+    z-index: -1;
+  }
+
+  .checkbox-wrapper-47 input[type=checkbox]:checked + label {
+    padding-left: 1em;
+    color: #0f5229;
+  }
+  .checkbox-wrapper-47 input[type=checkbox]:checked + label:before {
+    top: 0;
+    width: 100%;
+    height: 2em;
+    background: #b7e6c9;
+    border-color: #2cbc63;
+  }
+
+  .checkbox-wrapper-47 label,
+  .checkbox-wrapper-47 label::before {
+    transition: 0.25s all ease;
+  }
+  .hidden{
+      display:none !important;
+  }
     </style>
+
 </head>
 <body>
     <div class="asbplayer-subtitles-container-top" style="left: 391px; max-width: 625.594px; top: 400px;"><div class="asbplayer-subtitles"><span class="" style="color: #ffffff !important;font-size: 36px !important;font-weight: 700 !important;text-shadow: 0 0 3px #000000, 0 0 3px #000000, 0 0 3px #000000, 0 0 3px #000000 !important">次の手を考えなければ… なんだ　簡単に開く... （高木(たかぎ)）ねえ 西片
-（西片）うっ</span>
+（西片）うっ 考える</span>
     </div></div>
 
+<!--<div class="checkbox-wrapper-47">-->
+<!--  <input type="checkbox" name="cb" id="cb-47" />-->
+<!--  <label for="cb-47">Check this</label>-->
+<!--</div>-->
 
 
     <script src="main.js"></script>
