@@ -464,7 +464,9 @@ const create_context_menu = () => {
 };
 
 (async function() {
+    if(window.loaded_intelligent_subs) return;
     await loadJquery();
+    window.loaded_intelligent_subs = true;
     // add style
     let styleElement = document.createElement('style');
     styleElement.innerHTML = style;
@@ -477,8 +479,8 @@ const create_context_menu = () => {
         console.log("Server is offline");
     }
     // when .asbplayer-subtitles-container-top changes
-    // $(document).on('DOMSubtreeModified', '.asbplayer-subtitles-container-top', modify_sub);
-    let observer = new MutationObserver(modify_sub);
-    let targetNode = document.querySelector('.asbplayer-subtitles-container-top');
-    observer.observe(targetNode, { childList: true, subtree: true });
+    $(document).on('DOMSubtreeModified', '.asbplayer-subtitles-container-top', modify_sub);
+    // let observer = new MutationObserver(modify_sub);
+    // let targetNode = document.querySelector('.asbplayer-subtitles-container-top');
+    // observer.observe(targetNode, { childList: true, subtree: true });
 })();

@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Install Intelligent Subtitles</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+
+        @font-face {
+            font-family: 'NikkeiLine-Regular';
+            src: url('https://cdn.morisinc.net/fonts/nikkei/otf/PPNikkeiLine-Regular.otf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'PPNikkeiLine-UltraboldItalic';
+            src: url('https://cdn.morisinc.net/fonts/nikkei/otf/PPNikkeiLine-UltraboldItalic.otf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'PPNikkeiLine-Light';
+            src: url('https://cdn.morisinc.net/fonts/nikkei/otf/PPNikkeiLine-Light.otf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'PPNikkeiPacific-Light';
+            src: url('https://cdn.morisinc.net/fonts/nikkei/otf/PPNikkeiPacific-Light.otf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'PPNikkeiJournal-Light';
+            src: url('https://cdn.morisinc.net/fonts/nikkei/otf/PPNikkeiJournal-Light.otf') format('truetype');
+        }
+        @font-face {
+            font-family: 'PPNikkeiJournal-Ultrabold';
+            src: url('https://cdn.morisinc.net/fonts/nikkei/otf/PPNikkeiJournal-Ultrabold.otf') format('truetype');
+        }
+        @font-face {
+            font-family: 'PPNikkeiMaru-Ultrabold';
+            src: url('https://cdn.morisinc.net/fonts/nikkei/otf/PPNikkeiMaru-Ultrabold.otf') format('truetype');
+        }
+        @font-face {
+            font-family: 'PPNikkeiMaru-Regular';
+            src: url('https://cdn.morisinc.net/fonts/nikkei/otf/PPNikkeiMaru-Regular.otf') format('truetype');
+        }
+
+        button {
+            border-radius: 50px;
+            border: 0;
+            background: #ff5900;
+            color: black;
+            padding: 10px 20px;
+            font-size: 30px;
+            font-family: "PPNikkeiJournal-Light";
+            letter-spacing: 2.5px;
+            display: flex;
+            width:max-content;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #000;
+        }
+
+        .card {
+            min-width: 50%;
+            /*box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;*/
+            min-height: 50%;
+            border-radius: 50px;
+            background: #333;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            padding-top:0;
+        }
+
+        .card-item {
+
+        }
+
+        button .icon {
+            height: 2rem;
+            margin-left:1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button .icon span {
+            background: black;
+            border-radius: 100%;
+            padding: 0.6rem;
+            width: 0.9rem;
+            height: 0.9rem;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            transform: rotate(-90deg);
+
+            transition: all 0.5s ease;
+        }
+
+        button:hover .icon span {
+            transform: rotate(0deg);
+
+            border-radius: 100%;
+            padding: 0.6rem;
+            width: 0.9rem;
+            height: 0.9rem;
+        }
+        h1{
+            font-family: "PPNikkeiMaru-Regular";
+            color:#fff;
+            font-size:4rem;
+        }
+        p{
+            font-family: "PPNikkeiLine-Light";
+            color:#ddd;
+            font-size:2rem;
+            max-width:80%;
+            display: flex;
+        }
+        .small-btn{
+            background: #ff5900;
+            color: black;
+            padding: 5px 10px;
+            /*border:2px solid #bb4200;*/
+            font-size: 20px;
+            font-family: "PPNikkeiJournal-Light";
+            letter-spacing: 2.5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width:max-content;
+            border-radius: 5px;
+            width:max-content;
+            height: max-content;
+            cursor:pointer;
+            margin-inline:1rem;
+        }
+        ul{
+            display:flex;
+            flex-direction: column;
+        }
+        ul li{
+            font-family: "PPNikkeiLine-Light";
+            color:#ddd;
+            font-size:2rem;
+            /*max-width:80%;*/
+            display: flex;
+            flex-wrap: wrap;
+            margin:1rem;
+        }
+        .stuff{
+            display: flex;
+            flex-wrap: wrap;
+            margin-left:2rem;
+
+        }
+        .break{
+            width:100%;
+        }
+    </style>
+</head>
+<body>
+
+<button id="addBookmark">
+    Install Bookmarklet
+    <div class="icon">
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+        <path d="M1.05403 31.6175C0.271626 32.3972 0.271626 33.6614 1.05403 34.441C1.83644 35.2207 3.10497 35.2207 3.88737 34.441L1.05403 31.6175ZM35.5599 2.05152C35.5599 0.948871 34.6629 0.0549994 33.5564 0.0549994L15.5251 0.0549994C14.4187 0.0549994 13.5217 0.948871 13.5217 2.05152C13.5217 3.15416 14.4187 4.04804 15.5251 4.04804H31.5529V20.0202C31.5529 21.1228 32.4499 22.0167 33.5564 22.0167C34.6629 22.0167 35.5599 21.1228 35.5599 20.0202L35.5599 2.05152ZM3.88737 34.441L34.9731 3.46327L32.1397 0.639766L1.05403 31.6175L3.88737 34.441Z"
+              fill="#ff5900"/>
+      </svg>
+    </span>
+    </div>
+</button>
+<div class="card main" style="display:none">
+    <h1>Adding the Bookmarklet</h1>
+    <p>Drag the button below to your bookmarks bar <span class="small-btn how">?</span></p>
+    <button id="bookmarklet" draggable="true" style="cursor:grab">
+        Drag me to your bookmarks bar
+        <div class="icon">
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <path d="M1.05403 31.6175C0.271626 32.3972 0.271626 33.6614 1.05403 34.441C1.83644 35.2207 3.10497 35.2207 3.88737 34.441L1.05403 31.6175ZM35.5599 2.05152C35.5599 0.948871 34.6629 0.0549994 33.5564 0.0549994L15.5251 0.0549994C14.4187 0.0549994 13.5217 0.948871 13.5217 2.05152C13.5217 3.15416 14.4187 4.04804 15.5251 4.04804H31.5529V20.0202C31.5529 21.1228 32.4499 22.0167 33.5564 22.0167C34.6629 22.0167 35.5599 21.1228 35.5599 20.0202L35.5599 2.05152ZM3.88737 34.441L34.9731 3.46327L32.1397 0.639766L1.05403 31.6175L3.88737 34.441Z"
+                  fill="#ff5900"/>
+          </svg>
+        </span>
+        </div>
+    </button>
+    <p class="after1" style="opacity:0">Drag to your bookmarks bar</p>
+    <p class="after2" style="opacity:0">After adding the bookmark, please rename it to , or a name of your choice. <br>Click the bookmark when you are on a page with subtitles to enable the feature.</p>
+</div>
+<div class="card instructions" style="display: none">
+    <h1>How to open the bookmark bar</h1>
+    <ul>
+        <li><strong>Google Chrome:</strong> <div class="stuff">
+             Press <span class="small-btn">Shift</span>+<span class="small-btn">Ctrl</span>+<span class="small-btn">B</span> (Windows)<div class="break"></div> or <span class="small-btn">Shift</span>+<span class="small-btn">⌘</span>+<span class="small-btn">B</span> (Mac).
+        </div></li>
+        <li><strong>Firefox:</strong> <div class="stuff">
+            Click View > Toolbars > Bookmarks Toolbar, <div class="break"></div> <span class="small-btn">Control</span>+<span class="small-btn">B</span> (Windows)<div class="break"></div> or <span class="small-btn">⌘</span>+<span class="small-btn">B</span> (Mac)
+        </div></li>
+        <li><strong>Safari:</strong> <div class="stuff">
+            Click View > Show Favorites Bar.
+        </div></li>
+        <li><strong>Internet Explorer:</strong> <div class="stuff">Click View > Toolbars > Favorites Bar.</div></li>
+    </ul>
+    <button id="back">
+        Back
+        <div class="icon">
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <path d="M1.05403 31.6175C0.271626 32.3972 0.271626 33.6614 1.05403 34.441C1.83644 35.2207 3.10497 35.2207 3.88737 34.441L1.05403 31.6175ZM35.5599 2.05152C35.5599 0.948871 34.6629 0.0549994 33.5564 0.0549994L15.5251 0.0549994C14.4187 0.0549994 13.5217 0.948871 13.5217 2.05152C13.5217 3.15416 14.4187 4.04804 15.5251 4.04804H31.5529V20.0202C31.5529 21.1228 32.4499 22.0167 33.5564 22.0167C34.6629 22.0167 35.5599 21.1228 35.5599 20.0202L35.5599 2.05152ZM3.88737 34.441L34.9731 3.46327L32.1397 0.639766L1.05403 31.6175L3.88737 34.441Z"
+                  fill="#ff5900"/>
+          </svg>
+        </span>
+        </div>
+    </button>
+</div>
+
+<script>
+    let bookmarklet = "javascript:";
+    const title = "Install Intelligent Subtitles";
+    $(document).ready(function () {
+        //fetch the bookmarklet code
+        $.get("main.min.js", function (data) {
+            bookmarklet += data;
+        });
+        $("#addBookmark").click(function () {
+            $(".main").show();
+            $("#addBookmark").hide();
+        });
+        $("#bookmarklet").on("dragstart", function (event) {
+            event.originalEvent.dataTransfer.setData("text/plain", bookmarklet);
+            event.originalEvent.dataTransfer.setData("text/html", title);
+            event.originalEvent.dataTransfer.effectAllowed = "copy";
+            $(".after1").animate({opacity: 1}, 256);
+            $(".after2").animate({opacity: 0}, 256);
+        });
+        $("#bookmarklet").on("dragend", function (event) {
+            $(".after1").animate({opacity: 0}, 256);
+            $(".after2").animate({opacity: 1}, 256);
+            $(".after2").html("After adding the bookmark, please rename it to "+title+", or a name of your choice. <br>Click the bookmark when you are on a page with subtitles to enable the feature.");
+        });
+        $(".how").on("click",()=>{
+            $(".main").hide();
+            $(".instructions").show();
+        });
+        $("#back").on("click",()=>{
+            $(".main").show();
+            $(".instructions").hide();
+        });
+    });
+</script>
+</body>
+</html>
