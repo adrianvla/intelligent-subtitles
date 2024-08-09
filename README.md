@@ -45,6 +45,10 @@ Open your favourite website supported by ASB player, then copy the code located 
 
 Enjoy
 
+# How To Use
+
+The app should automatically modify the subtitles on the fly. To modify settings, right-click on the subtitles to open a context menu.
+
 # License
 ```
 MIT License
