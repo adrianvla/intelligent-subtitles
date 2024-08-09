@@ -35,7 +35,7 @@ pip install fastapi
 pip install pydantic
 ```
 # Running
-#### ! Anki must be opened
+#### ! Anki must be opened with AnkiConnect running, or else the following command will crash
 Run
 ```sh
 python main.py
