@@ -15,19 +15,25 @@ An addon for ASB player that modifies subtitles based on your registered Anki kn
 
 #### Dictionnary Lookup
 
+<img width="591" alt="Screenshot 2024-08-12 at 23 52 26" src="https://github.com/user-attachments/assets/5ae3dd1d-5e47-448d-a1c2-57d412f23949">
+
+#### Create flashcard
 
 # Features
-### Copy-paste the contents main.min.js into the console of a video streaming website to activate
-### Gramatically-analyses subtitles on the fly and colorizes them
-### Displays furigana on unknown words
-### Adjustable difficulty (you can change the minimum Anki ease required for a card to be recognised as "known")
-### Blurs known words
-### Shows definitions on hover taken directly from your Anki deck (if not found, then from jisho.org)
-### Every single one of these settings are configurable
-### Dark Mode
-### Shows the grammatical type of a word
+- ### Supports multiple languages
+- ### Create Anki cards from unknown words
+- ### Copy-paste the contents main.min.js into the console of a video streaming website to activate
+- ### Gramatically-analyses subtitles on the fly and colorizes them
+- ### Displays furigana on unknown words
+- ### Adjustable difficulty (you can change the minimum Anki ease required for a card to be recognised as "known")
+- ### Blurs known words
+- ### Shows definitions on hover taken directly from your Anki deck (if not found, then from jisho.org)
+- ### Every single one of these settings are configurable
+- ### Dark Mode
+- ### Shows the grammatical type of a word
 
 # Setup
+Download the repository
 Install the [AnkiConnect](https://ankiweb.net/shared/info/2055492159) plugin in Anki
 ```sh
 pip install nagisa
@@ -37,6 +43,16 @@ pip install pydantic
 ```
 # Running
 #### ! Anki must be opened with AnkiConnect running, or else the following command will crash
+Change the following settings in main.py to choose a language:
+```py
+# MODIFY THIS
+LANGUAGE = "ja" # "ja" for Japanese, "de" for German
+FETCH_ANKI = True # if enabled, will search for already present flashcards to determine if you already know a word or not
+ANKI_CONNECT_URL = "http://127.0.0.1:8765"
+
+# DO NOT MODIFY BELOW
+...
+```
 Run
 ```sh
 python main.py
@@ -55,14 +71,17 @@ Enjoy
 The app should automatically modify the subtitles on the fly. To modify settings, right-click on the subtitles to open a context menu.
 
 # TODO
-
-- Add unknown words to your Anki deck
 - Stats
-- Support for other languages
 
 # Currently Supported languages
 
 - Japanese
+- German
+
+# Adding a new language
+In the /languages folder, you'll find examples like de.py and ja.py
+Each of these files must contain a `LANGUAGE_TOKENIZE` function which will be called to tokenize a phrase and will return pairs of words and their respective POS (i.e. Noun, Adjective...).
+They also must contain `LANGUAGE_TRANSLATE` that will fetch a dictionnary of your choice for the language and return the definition.
 
 # License
 ```
