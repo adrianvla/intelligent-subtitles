@@ -36,11 +36,12 @@ An addon for ASB player that modifies subtitles based on your registered Anki kn
 Download the repository
 Install the [AnkiConnect](https://ankiweb.net/shared/info/2055492159) plugin in Anki
 ```sh
-pip install nagisa
 pip install uvicorn
 pip install fastapi
 pip install pydantic
 ```
+If you'll use this for German, you'll also have to install `spacy` by doing `pip install spacy`
+If you'll use this for your Japanese studies, you'll also have to install `nagisa` by running `pip install nagisa`
 # Running
 #### ! Anki must be opened with AnkiConnect running, or else the following command will crash
 Change the following settings in main.py to choose a language:
@@ -69,6 +70,12 @@ Enjoy
 # How To Use
 
 The app should automatically modify the subtitles on the fly. To modify settings, right-click on the subtitles to open a context menu.
+
+# Troubleshooting
+The python script may crash with the following message: `No valid cards found, maybe you have selected the wrong deck?`. To resolve this problem, you may want to select the correct flashcard deck in anki (the selected deck will automatically be highlighted). The japanese variant of `intelligent-subtitles` only supports Core 2K/6K for now (tested deck: `Core 2k/6k Optimized JP Vocab (JouzuJuls)`). 
+The python script may crash unexpectedly on startup; if so, check if you have already opened Anki and that AnkiConnect is running.
+
+The definitions may take a really long time to load if you have a poor connection.
 
 # TODO
 - Stats
