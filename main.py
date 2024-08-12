@@ -1,4 +1,18 @@
-import nagisa
+# MODIFY THIS
+LANGUAGE = "ja" # "ja" for Japanese, "de" for German
+FETCH_ANKI = True # if enabled, will search for already present flashcards to determine if you already know a word or not
+ANKI_CONNECT_URL = "http://127.0.0.1:8765"
+
+# DO NOT MODIFY BELOW
+import sys
+sys.path.append('./languages')
+
+if LANGUAGE == "ja":
+    from ja import *
+elif LANGUAGE == "de":
+    from de import *
+
+
 import uvicorn
 from typing import List, Tuple
 import json
@@ -7,14 +21,14 @@ from urllib.parse import quote
 
 
 # rest api
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-ANKICONNECTURL = "http://127.0.0.1:8765";
+
 
 
 def request(action, **params):
@@ -23,7 +37,7 @@ def request(action, **params):
 
 def invoke(action, **params):
     requestJson = json.dumps(request(action, **params)).encode('utf-8')
-    response = json.load(urllib.request.urlopen(urllib.request.Request(ANKICONNECTURL, requestJson)))
+    response = json.load(urllib.request.urlopen(urllib.request.Request(ANKI_CONNECT_URL, requestJson)))
     if len(response) != 2:
         raise Exception('response has an unexpected number of fields')
     if 'error' not in response:
@@ -45,6 +59,9 @@ who_contain = {}
 
 
 def get_all_cards():
+    global FETCH_ANKI
+    if not FETCH_ANKI:
+        return
     global all_cards
     global cards_per_id
     global words_ids
@@ -58,6 +75,13 @@ def get_all_cards():
     all_cards = invoke('cardsInfo', cards=card_ids)
     print("Recieved all cards")
     # print(all_cards[0]['fields']['Expression']['value'])
+    # filter out cards that may crash the server
+    all_cards = [card for card in all_cards if 'Expression' in card['fields']]
+    if len(all_cards) == 0:
+        print("No valid cards found, maybe you have selected the wrong deck?")
+        sys.exit(-1)
+        return
+
     for card in all_cards:
         words = card['fields']['Expression']['value']
         # trim everything that's ascii
@@ -66,6 +90,8 @@ def get_all_cards():
 
         cards_per_id[card['cardId']] = card
     print("Loaded all cards")
+    print("Loading who_contain")
+
 
     # generate who_contain
 
@@ -118,8 +144,9 @@ class GetCardResponse(BaseModel):
 @app.post("/tokenize", response_model=TokenizeResponse)
 def tokenize(req: TokenizeRequest):
     print("requested tokenization: ", req.text)
-    text = nagisa.tagging(req.text)
-    tokens = list(zip(text.words, text.postags))
+    # text = nagisa.tagging(req.text)
+    tokens = LANGUAGE_TOKENIZE(req.text)
+    # tokens = list(zip(text.words, text.postags))
     return {"tokens": tokens}
 
 getCardCache = {}
@@ -161,6 +188,7 @@ def get_card(req: GetCardRequest):
     #filter out cards that have the same id
     matched = list(set(matched))
     matched.sort(reverse=True)
+    print(matched)
     matched = matched[:5]
     # #get ease of the cards
     # eases = invoke('getEaseFactors', cards=[match[1] for match in matched])
@@ -180,7 +208,7 @@ def get_card(req: GetCardRequest):
 
 
 
-getTranslationUrl = "https://jisho.org/api/v1/search/words?keyword="
+
 
 class TranslationRequest(BaseModel):
     word: str
@@ -188,23 +216,11 @@ class TranslationRequest(BaseModel):
 class TranslationResponse(BaseModel):
     data: List
 
-JishoCache = {}
 
 @app.post("/translate", response_model=TranslationResponse)
 def get_translation(req: TranslationRequest):
-    global getTranslationUrl
-    global JishoCache
     print("requested translation: ", req.word)
-    if req.word in JishoCache:
-        return JishoCache[req.word]
-    # send request to jisho
-    encoded_word = quote(req.word)
-    url = getTranslationUrl + encoded_word
-    response = urllib.request.urlopen(url)
-    data = json.load(response)
-    JishoCache[req.word] = {"data": data['data']}
-    return {"data": data['data']}
-
+    return LANGUAGE_TRANSLATE(req.word)
 class ControlRequest(BaseModel):
     function: str
 
@@ -218,7 +234,17 @@ def control(req: ControlRequest):
     else:
         return {"response": "Unknown function"}
 
+@app.post("/fwd-to-anki")
+async def fwd_to_anki(req: Request):
 
+    # Get the body of the incoming request
+    body = await req.json()
+
+    # Forward the request to AnkiConnect
+    requestJson = json.dumps(body).encode('utf-8')
+    response = json.load(urllib.request.urlopen(urllib.request.Request(ANKI_CONNECT_URL, requestJson)))
+
+    return response
 
 
 

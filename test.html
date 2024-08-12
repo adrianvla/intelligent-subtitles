@@ -9,6 +9,7 @@
     <style>
         body{
             position:relative;
+            margin:0;
         }
         .subtitle_word{
             position:relative;
@@ -53,7 +54,14 @@
             background:0;
             font-size:1.5rem;
         }
-        #contextMenu.dark .row.in input{
+        #contextMenu .row.in select{
+            width:90px;
+            height:32px;
+            border:0;
+            background:0;
+            font-size:1rem;
+        }
+        #contextMenu.dark .row.in input, #contextMenu.dark .row.in select{
             color:white;
         }
         #contextMenu .row.in input:focus{
@@ -150,6 +158,19 @@
             /*backdrop-filter: invert(1);*/
             background-color: rgba(255,0,0, 0.72);
         }
+        .create_flashcard{
+            position:absolute;
+            top:0;
+            right:0;
+            font-size: 1em;
+            /*mix-blend-mode: multiply;*/
+            padding:5px;
+            border-bottom-left-radius:5px;
+            /*backdrop-filter: invert(1);*/
+            background-color: rgba(115, 255, 0, 0.72);
+            border:0;
+            z-index:-1;
+        }
         .checkbox-wrapper-47{
             margin-top:10px;
             margin-bottom:10px;
@@ -201,18 +222,111 @@
   .hidden{
       display:none !important;
   }
+
+  .flashcard-preview-c {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      min-height:100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 2147483646;
+  }
+  .flashcard-preview{
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 50%;
+      min-height:50%;
+      position:relative;
+      color:black;
+  }
+  .flashcard-preview-c.dark .flashcard-preview{
+      background-color: #333;
+      color: white;
+  }
+  .flashcard-preview button{
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #9DD997;
+    color: black;
+    cursor: pointer;
+    width:calc(100% - 20px) !important;
+    position:absolute;
+    bottom:10px;
+
+  }
+  .flashcard-preview{
+      font-family: sans-serif;
+  }
+  .flashcard-preview .close-btn{
+    position:absolute;
+    top:10px;
+    left:10px;
+    font-size: 1.5em;
+    cursor:pointer;
+      width:50px;
+      height:50px;
+      border:1px solid #333;
+        border-radius:5px;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .flashcard-preview-c.dark .flashcard-preview .close-btn{
+      border:1px solid #ccc;
+  }
+  .flashcard-preview-c.dark .flashcard-preview .plus, .flashcard-preview-c.dark .flashcard-preview .plus:after{
+    background: #ccc;
+
+  }
+.flashcard-preview .plus {
+  background: #333;
+  height: 50px;
+  position: relative;
+  width: 8px;
+    transform:rotate(-45deg);
+
+}
+.flashcard-preview .plus:after {
+  background: #333;
+  content: "";
+  height: 8px;
+  left: -21px;
+  position: absolute;
+  top: 21px;
+  width: 50px;
+}
+.flashcard-preview .content{
+    overflow:auto;
+    margin-bottom:30px;
+}
     </style>
 
 </head>
 <body>
-    <div class="asbplayer-subtitles-container-top" style="left: 391px; max-width: 625.594px; top: 400px;"><div class="asbplayer-subtitles"><span class="" style="color: #ffffff !important;font-size: 36px !important;font-weight: 700 !important;text-shadow: 0 0 3px #000000, 0 0 3px #000000, 0 0 3px #000000, 0 0 3px #000000 !important">次の手を考えなければ… なんだ　簡単に開く... （高木(たかぎ)）ねえ 西片
-（西片）うっ 考える</span>
+    <div class="asbplayer-subtitles-container-top" style="left: 100px; max-width: 625.594px; top: 400px;"><div class="asbplayer-subtitles"><span class="" style="color: #ffffff !important;font-size: 36px !important;font-weight: 700 !important;text-shadow: 0 0 3px #000000, 0 0 3px #000000, 0 0 3px #000000, 0 0 3px #000000 !important">次の手を考えなければ… なんだ　簡単に開く... （高木(たかぎ)）ねえ 西片
+（西片）うっ 考える
+例えば
+探検
+
+<!--    Stefan kümmert sich um die Unterkunft. Auf Teneriffa gibt es sehr viele Hotels mit unterschiedlichen Preisen. Vieles ist zu teuer, deswegen schaut Stefan erst einmal nach einem Hostel. Allerdings muss man sich dort selbst um die Verpflegung kümmern.-->
+
+
+
+    </span>
     </div></div>
 
-<!--<div class="checkbox-wrapper-47">-->
-<!--  <input type="checkbox" name="cb" id="cb-47" />-->
-<!--  <label for="cb-47">Check this</label>-->
-<!--</div>-->
+
 
 
     <script src="main.js"></script>

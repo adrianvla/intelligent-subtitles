@@ -1,8 +1,51 @@
 let getCardUrl = "http://127.0.0.1:8000/getCard";
 let tokeniserUrl = "http://127.0.0.1:8000/tokenize";
 let getTranslationUrl = "http://127.0.0.1:8000/translate";
+let ankiUrl = "http://127.0.0.1:8000/fwd-to-anki";
 
-const style = `body{position:relative}.subtitle_word{position:relative}#contextMenu,.subtitle_hover{position:absolute;left:0;width:max-content;height:max-content;background-color:rgba(255,255,255,0.75);backdrop-filter: blur(10px);color:black;align-items:center;font-size:20px;display:flex;flex-direction:column;font-family:sans-serif;box-shadow:0 0 10px 0 rgba(0,0,0,0.5);padding:10px;border-radius:10px;max-height:300px;max-width:300px;overflow-y:auto;text-shadow:0 1px 0 rgba(255, 255, 255, 0.4) !important}#contextMenu{max-width:none;padding:0}#contextMenu .row.colour-row label,#contextMenu .row.in label{border-right:1px solid;width:250px;padding:10px}#contextMenu .row.in input{width:90px;height:32px;border:0;background:0;font-size:1.5rem}#contextMenu.dark .row.in input{color:white}#contextMenu .row.in input:focus{outline:none}#contextMenu .sep{border-bottom:1px solid}.subtitle_hover .hover_reading *,.subtitle_hover .hover_translation *{color:black !important}.subtitle_hover.dark .hover_reading *,.subtitle_hover.dark .hover_translation *{color:#f3efef !important}.subtitle_hover.known{box-shadow:rgba(100, 66, 66, 0.16) 0 1px 4px, rgb(24, 197, 20) 0 0 0 3px}#contextMenu.dark,.subtitle_hover.dark{background-color:rgba(80, 82, 87, 0.83);color:#f3efef;text-shadow:none !important}hr{margin-top:20px;margin-bottom:20px;border:0;border-top:2px solid rgba(0,0,0,0.3);width:100%}#contextMenu.dark hr,.subtitle_hover.dark hr{border-top:1px solid rgba(185, 185, 185, 0.1)}.asbplayer-subtitles-container-top{position:absolute}#contextMenu #settingsForm{display:flex;flex-direction:column}#contextMenu input[type="button"],#contextMenu input[type="submit"]{margin:10px;padding:5px;border-radius:5px;border:none;background-color:#9DD997;color:black;cursor:pointer;width:calc(100% - 20px) !important}#contextMenu #settingsForm .row{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid;padding-inline:10px}#contextMenu #settingsForm .colour-row{padding-left:20px}#contextMenu #settingsForm input{}.hover_reading{display:flex;flex-direction:column;justify-content:center;align-items:center}.hover_ease{margin-top:25px;color:#9DD997 !important}.subtitle_hover{gap:10px}.subtitle_hover.dark .pitch{filter:invert(1)}.subtitle_hover[data-pos]::before{position:absolute;bottom:0;right:0;content:attr(data-pos);font-size:1em;z-index:-1;padding:5px;border-top-left-radius:5px;background-color:rgba(255,0,0, 0.72)}.checkbox-wrapper-47{margin-top:10px;margin-bottom:10px}.checkbox-wrapper-47 input[type="checkbox"]{display:none;visibility:hidden}.checkbox-wrapper-47 label{position:relative;padding-left:2em;padding-right:1em;line-height:2;cursor:pointer;display:inline-flex}.checkbox-wrapper-47 label:before{box-sizing:border-box;content:" ";position:absolute;top:0.3em;left:0;display:block;width:1.4em;height:1.4em;border:2px solid #9098A9;border-radius:6px;z-index:-1}.checkbox-wrapper-47 input[type=checkbox]:checked + label{padding-left:1em;color:#0f5229}.checkbox-wrapper-47 input[type=checkbox]:checked + label:before{top:0;width:100%;height:2em;background:#b7e6c9;border-color:#2cbc63}.checkbox-wrapper-47 label,.checkbox-wrapper-47 label::before{transition:0.25s all ease}.hidden{display:none !important}`;
+const style = `body{position:relative;margin:0}.subtitle_word{position:relative}#contextMenu,.subtitle_hover{position:absolute;left:0;width:max-content;height:max-content;background-color:rgba(255,255,255,0.75);backdrop-filter: blur(10px);color:black;align-items:center;font-size:20px;display:flex;flex-direction:column;font-family:sans-serif;box-shadow:0 0 10px 0 rgba(0,0,0,0.5);padding:10px;border-radius:10px;max-height:300px;max-width:300px;overflow-y:auto;text-shadow:0 1px 0 rgba(255, 255, 255, 0.4) !important}#contextMenu{max-width:none;padding:0}#contextMenu .row.colour-row label,#contextMenu .row.in label{border-right:1px solid;width:250px;padding:10px}#contextMenu .row.in input{width:90px;height:32px;border:0;background:0;font-size:1.5rem}#contextMenu .row.in select{width:90px;height:32px;border:0;background:0;font-size:1rem}#contextMenu.dark .row.in input,#contextMenu.dark .row.in select{color:white}#contextMenu .row.in input:focus{outline:none}#contextMenu .sep{border-bottom:1px solid}.subtitle_hover .hover_reading *,.subtitle_hover .hover_translation *{color:black !important}.subtitle_hover.dark .hover_reading *,.subtitle_hover.dark .hover_translation *{color:#f3efef !important}.subtitle_hover.known{box-shadow:rgba(100, 66, 66, 0.16) 0 1px 4px, rgb(24, 197, 20) 0 0 0 3px}#contextMenu.dark,.subtitle_hover.dark{background-color:rgba(80, 82, 87, 0.83);color:#f3efef;text-shadow:none !important}hr{margin-top:20px;margin-bottom:20px;border:0;border-top:2px solid rgba(0,0,0,0.3);width:100%}#contextMenu.dark hr,.subtitle_hover.dark hr{border-top:1px solid rgba(185, 185, 185, 0.1)}.asbplayer-subtitles-container-top{position:absolute}#contextMenu #settingsForm{display:flex;flex-direction:column}#contextMenu input[type="button"],#contextMenu input[type="submit"]{margin:10px;padding:5px;border-radius:5px;border:none;background-color:#9DD997;color:black;cursor:pointer;width:calc(100% - 20px) !important}#contextMenu #settingsForm .row{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid;padding-inline:10px}#contextMenu #settingsForm .colour-row{padding-left:20px}#contextMenu #settingsForm input{}.hover_reading{display:flex;flex-direction:column;justify-content:center;align-items:center}.hover_ease{margin-top:25px;color:#9DD997 !important}.subtitle_hover{gap:10px}.subtitle_hover.dark .pitch{filter:invert(1)}.subtitle_hover[data-pos]::before{position:absolute;bottom:0;right:0;content:attr(data-pos);font-size:1em;z-index:-1;padding:5px;border-top-left-radius:5px;background-color:rgba(255,0,0, 0.72)}.create_flashcard{position:absolute;top:0;right:0;font-size:1em;padding:5px;border-bottom-left-radius:5px;background-color:rgba(115, 255, 0, 0.72);border:0;z-index:-1}.checkbox-wrapper-47{margin-top:10px;margin-bottom:10px}.checkbox-wrapper-47 input[type="checkbox"]{display:none;visibility:hidden}.checkbox-wrapper-47 label{position:relative;padding-left:2em;padding-right:1em;line-height:2;cursor:pointer;display:inline-flex}.checkbox-wrapper-47 label:before{box-sizing:border-box;content:" ";position:absolute;top:0.3em;left:0;display:block;width:1.4em;height:1.4em;border:2px solid #9098A9;border-radius:6px;z-index:-1}.checkbox-wrapper-47 input[type=checkbox]:checked + label{padding-left:1em;color:#0f5229}.checkbox-wrapper-47 input[type=checkbox]:checked + label:before{top:0;width:100%;height:2em;background:#b7e6c9;border-color:#2cbc63}.checkbox-wrapper-47 label,.checkbox-wrapper-47 label::before{transition:0.25s all ease}.hidden{display:none !important}.flashcard-preview-c{position:absolute;top:0;left:0;width:100%;height:100%;min-height:100vh;display:flex;justify-content:center;align-items:center;background-color:rgba(0, 0, 0, 0.5);z-index:2147483646}.flashcard-preview{background-color:white;padding:20px;border-radius:10px;box-shadow:0 0 10px 0 rgba(0,0,0,0.5);display:flex;flex-direction:column;align-items:center;min-width:50%;min-height:50%;position:relative;color:black}.flashcard-preview-c.dark .flashcard-preview{background-color:#333;color:white}.flashcard-preview button{padding:10px;border-radius:5px;border:none;background-color:#9DD997;color:black;cursor:pointer;width:calc(100% - 20px) !important;position:absolute;bottom:10px}.flashcard-preview{font-family:sans-serif}.flashcard-preview .close-btn{position:absolute;top:10px;left:10px;font-size:1.5em;cursor:pointer;width:50px;height:50px;border:1px solid #333;border-radius:5px;display:flex;justify-content:center;align-items:center}.flashcard-preview-c.dark .flashcard-preview .close-btn{border:1px solid #ccc}.flashcard-preview-c.dark .flashcard-preview .plus,.flashcard-preview-c.dark .flashcard-preview .plus:after{background:#ccc}.flashcard-preview .plus{background:#333;height:50px;position:relative;width:8px;transform:rotate(-45deg)}.flashcard-preview .plus:after{background:#333;content:"";height:8px;left:-21px;position:absolute;top:21px;width:50px}.flashcard-preview .content{overflow:auto;margin-bottom:30px}`;
+
+const supported_languages = ["ja","de"];
+
+const lang_data = {
+    "ja":{
+        "name":"Japanese",
+        "translatable":["名詞","動詞","助詞","形状詞","副詞", "副詞節"],
+        "name_translated":"日本語",
+        "colour_codes":{
+            "名詞":"#ebccfd",
+            "動詞":"#d6cefd",
+            "助詞":"#f5d7b8",
+            "助動詞":"#ffefd1",
+            "形状詞":"#def6ff",
+            "副詞": "#b8cdf5"
+        },
+        "fixed_settings":{}
+    },
+    "de":{
+        "name":"German",
+        "translatable":["NOUN","VERB","ADJ","ADV"],
+        "name_translated":"Deutsch",
+        "colour_codes":{
+            "NOUN":"#ebccfd",
+            "PROPN":"#ebccfd",
+            "PRON":"#fdccd3",
+            "VERB":"#ffefd1",
+            "SCONJ":"#f5d7b8",
+            "PART":"#f5d7b8",
+            "DET":"#cef5b8",
+            "ADP":"#b8f5de",
+            "AUX":"#ffefd1",
+            "ADJ":"#def6ff",
+            "ADV": "#b8cdf5",
+            "PUNCT": "#ffffff"
+        },
+        "fixed_settings":{
+            "use_anki":false,
+            "furigana":false
+        }
+    }
+};
 
 const DEFAULT_SETTINGS = {
     "known_ease_threshold": 1500,
@@ -12,20 +55,38 @@ const DEFAULT_SETTINGS = {
     "colour_known":"#cceec9",
     "do_colour_known":true,
     "do_colour_codes":true,
-    "colour_codes":{
-        "名詞":"#ebccfd",
-        "動詞":"#d6cefd",
-        "助詞":"#f5d7b8",
-        "助動詞":"#ffefd1",
-        "形状詞":"#def6ff",
-        "副詞": "#b8cdf5",
-    },
+    "colour_codes":{},
     "dark_mode":false,
     "hover_known_get_from_dictionary":false,
-    "show_pos":true
+    "show_pos":true,
+    "language":"ja",
+    "use_anki":true,
+    "furigana":true,
+    "enable_flashcard_creation":true,
+    "flashcard_deck":null,
+    "flashcards_add_picture":true
 }
 
 let settings = DEFAULT_SETTINGS;
+
+const load_lang_data = () => {
+    TRANSLATABLE = lang_data[settings.language].translatable;
+    settings.colour_codes = lang_data[settings.language].colour_codes;
+};
+
+const checkSettings = () => {
+    //check if every setting is present
+    for(let key in DEFAULT_SETTINGS){
+        if(!(key in settings)){
+            settings[key] = DEFAULT_SETTINGS[key];
+        }
+    }
+    //fix settings
+    for(let key in lang_data[settings.language].fixed_settings){
+        settings[key] = lang_data[settings.language].fixed_settings[key];
+    }
+    saveSettings();
+};
 
 const saveSettings = () => {
     //localstorage
@@ -101,6 +162,27 @@ function getTranslation(text){
         xhr.send(JSON.stringify({"word":text}));
     });
 }
+
+function sendRawToAnki(data){
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener('error', () => reject('failed to issue request'));
+        xhr.addEventListener('load', () => {
+            try {
+                const response = JSON.parse(xhr.responseText);
+                resolve(response);
+            } catch (e) {
+                reject(e);
+            }
+        });
+
+        xhr.open('POST', ankiUrl);
+        //send json
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(data));
+    });
+}
+
 // download and run jquery
 function loadJquery(){
     return new Promise((resolve, reject) => {
@@ -120,7 +202,7 @@ function loadJquery(){
     });
 }
 
-const TRANSLATABLE = ["名詞","動詞","助詞","形状詞","副詞", "副詞節"];
+var TRANSLATABLE;
 
 let lastSubTranslationElements = [];
 
@@ -151,10 +233,8 @@ const ping = () => {
         xhr.send(data);
     });
 };
-
+let already_added = {};
 const modify_sub = async () => {
-
-    ping();
 
     // get the text of the subtitle
     if($(".asbplayer-subtitles-container-top > .asbplayer-subtitles").hasClass("isBeingProcessed")) return;
@@ -178,15 +258,21 @@ const modify_sub = async () => {
         let doAppend = false;
         let doAppendHoverLazy = false;
         let hasFurigana = false;
+        // console.log("POS: "+pos, TRANSLATABLE.includes(pos),word,word.length, word.length==1,  TRANSLATABLE.includes(pos) && (!word.length==1));
 
-        if(TRANSLATABLE.includes(pos) && !(pos=="助詞"&&(word.length==1))){
+        if(TRANSLATABLE.includes(pos) && (!(word.length==1))){
             console.log("REQUESTING: "+word);
             //check if word is already known by the user
-            let card_data = await getCards(word);
-            console.log("card_data.poor: ",card_data.poor);
+            let card_data = {};
+            // let card_data = await getCards(word);
+            if(settings.use_anki)
+                try{card_data = await getCards(word);}catch(e){card_data.poor = true;}
+            else
+                card_data.poor = true;
+
             if(card_data.poor){ //card not found
                 show_subtitle = true;
-                doAppendHoverLazy=true;
+                doAppendHoverLazy = true;
             }else{
                 //compare ease
                 let current_card = card_data.cards[0];
@@ -200,14 +286,16 @@ const modify_sub = async () => {
                     hoverEl_html += `<div class="hover_reading">${reading_html}</div>`;
                     newEl.attr("known","false");
                     //furigana
-                    let reading_text = reading_html;
-                    // remove when see <!-- accent_start -->
-                    let accent_start = reading_text.indexOf("<!-- accent_start -->");
-                    if(accent_start != -1){
-                        reading_text = reading_text.substring(0,accent_start);
+                    if(settings.furigana){
+                        let reading_text = reading_html;
+                        // remove when see <!-- accent_start -->
+                        let accent_start = reading_text.indexOf("<!-- accent_start -->");
+                        if(accent_start != -1){
+                            reading_text = reading_text.substring(0,accent_start);
+                        }
+                        newEl.html(`<ruby>${word}<rt>${reading_text}</rt></ruby>`);
+                        hasFurigana = true;
                     }
-                    newEl.html(`<ruby>${word}<rt>${reading_text}</rt></ruby>`);
-                    hasFurigana = true;
                 }else{
                     newEl.attr("known","true");
                     if(settings.hover_known_get_from_dictionary){
@@ -230,16 +318,24 @@ const modify_sub = async () => {
             newEl.append(hoverEl);
             hoverEl.text("Loading...");
             let hasBeenLoaded = false;
-            let timeout;
+            let processing = false;
             newEl.hover(async function(){
                 $(`.hover_${uuid}`).css("display","flex");
+                if(processing) return;
                 if(hasBeenLoaded) return;
+                processing = true;
                 let translation_data = await getTranslation(word);
+                let raw_flashcard_html = "";
                 translation_data.data.forEach((meaning)=>{
-                    let reading_html = meaning.japanese[0].reading;
-                    let translation_html = meaning.senses[0].english_definitions.join(", ");
+                    // let reading_html = meaning.japanese[0].reading;
+                    // let translation_html = meaning.senses[0].english_definitions.join(", ");
+                    let reading_html = meaning.reading;
+                    let translation_html = meaning.definitions;
                     hoverEl_html += `<div class="hover_translation">${translation_html}</div>`;
                     hoverEl_html += `<div class="hover_reading">${reading_html}</div>`;
+                    raw_flashcard_html += `<p>${translation_html}</p>`;
+                    raw_flashcard_html += `<p>${reading_html}</p>`;
+
                 });
                 if(translation_data.data.length==0) hoverEl_html = "No translation found";
                 hoverEl.html(hoverEl_html);
@@ -253,15 +349,83 @@ const modify_sub = async () => {
                     $(`.hover_${uuid}`).css("left",`${hover_left}px`);
 
                 });
-            },async function(){
-                timeout = setTimeout(()=>{
-                    $(`.hover_${uuid}`).css("display","none");
-                },500);
-            });
 
-            hoverEl.hover(function(){
-                clearTimeout(timeout);
-            }, function(){
+                if(settings.enable_flashcard_creation && (translation_data.data.length!=0) && (!already_added[word])){
+                    let card_creation_data = {
+                        "note": {
+                            "deckName": settings.flashcard_deck,
+                            "modelName": "Basic",
+                            "fields": {
+                                "Front": word,
+                                "Back": raw_flashcard_html
+                            },
+                            "options": {
+                                "allowDuplicate": false,
+                                "duplicateScope": "deck",
+                                "duplicateScopeOptions": {
+                                    "deckName": "Default",
+                                    "checkChildren": false,
+                                    "checkAllModels": false
+                                }
+                            },
+                            "tags": [
+                                "intelligent-subtitles"
+                            ]
+                        }
+                    };
+                    if(settings.flashcards_add_picture){
+                        try{
+                            let picture_data_url = "";
+                            let video = $("video").get(0);
+                            if(!video) throw "No video found";
+                            let canvas = document.createElement("canvas");
+                            let ctx = canvas.getContext("2d");
+                            let width = 480;
+                            let height = video.videoHeight * (width / video.videoWidth);
+                            canvas.width = width;
+                            canvas.height = height;
+                            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                            picture_data_url = canvas.toDataURL("image/png");
+                            card_creation_data.note.picture = [{
+                                "url": picture_data_url,
+                                "filename": randomUUID()+".png",
+                                "fields": [
+                                    "Back"
+                                ]
+                            }];
+                        }catch(e){console.log(e)}
+                    }
+                    hoverEl_html += `<button class="create_flashcard">+ Anki</button>`;
+                    hoverEl.html(hoverEl_html);
+                    hoverEl.find(".create_flashcard").click(async function(){
+                        if(already_added[word]) return;
+
+                        //preview
+                        let preview_element = $(`<div class="flashcard-preview-c ${settings.dark_mode ? 'dark' : ''}"><div class="flashcard-preview"><div class="close-btn"><div class="plus"></div></div><h1>Flashcard Preview</h1><div class="content" contenteditable="true"></div><button>Create Flashcard</button></div></div>`);
+                        preview_element.find(".content").html(raw_flashcard_html);
+                        preview_element.find(".close-btn").click(()=>{preview_element.remove()});
+                        preview_element.find("button").click(async function(){
+                            card_creation_data.note.fields.Back = preview_element.find(".content").html();
+                            let response = await sendRawToAnki({"action":"addNote","version":6,"params":card_creation_data});
+                            if(!response.error){
+                                hoverEl.find(".create_flashcard").html("Success");
+                                already_added[word] = true;
+                                hoverEl.find(".create_flashcard").attr("disabled",true);
+                                preview_element.find(".content").html("");
+                                preview_element.find("h1").html("Flashcard Created Successfully");
+                                preview_element.find("button").remove();
+                                setTimeout(()=>{
+                                    preview_element.remove();
+                                },1000);
+                            }else{
+                                alert("Failed to create flashcard, check console for details");
+                                throw response;
+                            }
+                        });
+                        $("body").append(preview_element);
+                    });
+                }
+            },async function(){
                 $(`.hover_${uuid}`).css("display","none");
             });
         }
@@ -325,6 +489,24 @@ const modify_sub = async () => {
 
 const create_context_menu = () => {
     // Create context menu
+    const flashcard_decks = async function() {
+        if ($('#enable_flashcard_creation').is(':checked')) {
+            $('.flashcard_deck').removeClass('hidden');
+            //show flashcards_add_picture
+            $('#flashcards_add_picture').parent().parent().removeClass('hidden');
+            //get flashcard decks
+            $('#flashcard_deck').html('<option value="Loading...">Loading...</option>');
+            let flashcard_decks = await sendRawToAnki({"action":"deckNamesAndIds","version":6});
+            $('#flashcard_deck').html('');
+            for(let deck of Object.keys(flashcard_decks.result)){
+                $('#flashcard_deck').append(`<option value="${deck}" ${deck==settings.flashcard_deck ? 'selected' : ''}>${deck}</option>`);
+            }
+        } else {
+            $('.flashcard_deck').addClass('hidden');
+            $('#flashcards_add_picture').parent().parent().addClass('hidden');
+        }
+    };
+    $("#contextMenu").remove();
     let contextMenu = $(`
         <div id="contextMenu" class="${settings.dark_mode ? 'dark' : ''}" style="display:none">
             <form id="settingsForm">
@@ -382,6 +564,44 @@ const create_context_menu = () => {
                         <label for="dark_mode">Dark Mode </label>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="checkbox-wrapper-47">
+                        <input type="checkbox" id="use_anki" name="use_anki" ${settings.use_anki ? 'checked' : ''}>
+                        <label for="use_anki">Use Anki </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="checkbox-wrapper-47">
+                        <input type="checkbox" id="furigana" name="furigana" ${settings.furigana ? 'checked' : ''}>
+                        <label for="furigana">Furigana </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="checkbox-wrapper-47">
+                        <input type="checkbox" id="enable_flashcard_creation" name="enable_flashcard_creation" ${settings.enable_flashcard_creation ? 'checked' : ''}>
+                        <label for="enable_flashcard_creation">Enable flashcard creations </label>
+                    </div>
+                </div>
+                <div class="row ${settings.enable_flashcard_creation ? '' : 'hidden'}">
+                    <div class="checkbox-wrapper-47">
+                        <input type="checkbox" id="flashcards_add_picture" name="flashcards_add_picture" ${settings.flashcards_add_picture ? 'checked' : ''}>
+                        <label for="flashcards_add_picture">Add image to flashcards </label>
+                    </div>
+                </div>
+                <div class="row in flashcard_deck">
+                    <label for="language">Flashcard Deck: </label>
+                    <select id="flashcard_deck" name="flashcard_deck">
+                        <option value="Loading...">Loading...</option>
+                    </select>
+                </div>
+                <div class="row in">
+                    <label for="language">Subtitle Language: </label>
+                    <select id="language" name="language">
+                        ${supported_languages.map((lang)=>{
+                            return `<option value="${lang}" ${settings.language==lang ? 'selected' : ''}>${lang_data[lang].name_translated}</option>`;
+                        })}
+                    </select>
+                </div>
                 <input type="submit" value="Save">
                 <div class="sep"></div>
             </form>
@@ -396,6 +616,7 @@ const create_context_menu = () => {
             </div>
         `);
     }
+    flashcard_decks();
     // Add a button to the form in the context menu
     $('#settingsForm').append('<input type="button" id="restoreDefaults" value="Restore Defaults">');
     $('#blur_known_subtitles, #blur_words').on('change', function() {
@@ -420,6 +641,7 @@ const create_context_menu = () => {
             $('.controls-colour-codes').addClass('hidden');
         }
     });
+    $('#enable_flashcard_creation').on('change', flashcard_decks);
     // Add an event listener to the button
     $('#restoreDefaults').on('click', function() {
         settings = DEFAULT_SETTINGS;
@@ -455,11 +677,19 @@ const create_context_menu = () => {
         settings.hover_known_get_from_dictionary = $('#hover_known_get_from_dictionary').is(':checked');
         settings.dark_mode = $('#dark_mode').is(':checked');
         settings.show_pos = $('#show_pos').is(':checked');
+        settings.language = $('#language').val();
+        settings.use_anki = $('#use_anki').is(':checked');
+        settings.furigana = $('#furigana').is(':checked');
+        settings.enable_flashcard_creation = $('#enable_flashcard_creation').is(':checked');
+        settings.flashcard_deck = $('#flashcard_deck').val();
+        settings.flashcards_add_picture = $('#flashcards_add_picture').is(':checked');
 
         for (let code in settings.colour_codes) {
             settings.colour_codes[code] = $(`#${code}`).val();
         }
+        checkSettings();
         saveSettings();
+        create_context_menu();
     });
 };
 
@@ -472,11 +702,13 @@ const create_context_menu = () => {
     styleElement.innerHTML = style;
     document.head.appendChild(styleElement);
     loadSettings();
+    checkSettings();
+    load_lang_data();
     create_context_menu();
     modify_sub();
     await ping();
     if(!SERVER_ONLINE){
-        console.log("Server is offline");
+        alert("Intelligent-Subtitles: Server is offline");
     }
     // when .asbplayer-subtitles-container-top changes
     $(document).on('DOMSubtreeModified', '.asbplayer-subtitles-container-top', modify_sub);
