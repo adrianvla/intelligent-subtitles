@@ -7,7 +7,7 @@ An addon for ASB player that modifies subtitles based on your registered Anki kn
 
 #### Supports Dark Mode
 
-<img width="418" alt="Screenshot 2024-08-09 at 16 27 41" src="https://github.com/user-attachments/assets/e03125d4-6ca0-4f7e-989a-ffbd7b6fbbfb"> 
+<img width="431" alt="Screenshot 2024-08-13 at 13 42 02" src="https://github.com/user-attachments/assets/6a0ec690-5b9d-4108-b9dd-dd982598d964">
 
 #### Settings Menu
 
@@ -33,7 +33,9 @@ An addon for ASB player that modifies subtitles based on your registered Anki kn
 - ### Shows the grammatical type of a word
 
 # Setup
-Download the repository
+Install the [ASB Player browser extension](https://github.com/killergerbah/asbplayer)
+Install [Python](https://www.python.org/downloads/)
+Download this repository
 Install the [AnkiConnect](https://ankiweb.net/shared/info/2055492159) plugin in Anki
 ```sh
 pip install uvicorn
@@ -69,7 +71,9 @@ Enjoy
 
 # How To Use
 
-The app should automatically modify the subtitles on the fly. To modify settings, right-click on the subtitles to open a context menu.
+The app should automatically modify the subtitles on the fly. 
+To modify settings, move your mouse to the top right corner of the page; a cog button will appear. Clicking on it will open the settings menu. 
+The settings are saved on each website separately. Changing streaming websites will lead to loss of settings.
 
 # Troubleshooting
 The python script may crash with the following message: `No valid cards found, maybe you have selected the wrong deck?`. To resolve this problem, you may want to select the correct flashcard deck in anki (the selected deck will automatically be highlighted). The japanese variant of `intelligent-subtitles` only supports Core 2K/6K for now (tested deck: `Core 2k/6k Optimized JP Vocab (JouzuJuls)`). 
