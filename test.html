@@ -16,7 +16,6 @@
         }
         .subtitle_hover,#contextMenu{
             position:absolute;
-            left:0;
             width:max-content;
             height:max-content;
             background-color:rgba(255,255,255,0.75);
@@ -41,6 +40,12 @@
         #contextMenu{
             max-width:none;
             padding:0;
+            top:75px;
+            right:0;
+            height: calc(100vh - 75px);
+            max-height: none;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
         }
         #contextMenu .row.in label,#contextMenu .row.colour-row label{
             border-right: 1px solid;
@@ -310,6 +315,32 @@
     overflow:auto;
     margin-bottom:30px;
 }
+
+.settings-btn{
+    position:absolute;
+    top:10px;
+    right:10px;
+    font-size: 1.5em;
+    cursor:pointer;
+      width:50px;
+      height:50px;
+      border:1px solid #333;
+        border-radius:5px;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+
+}
+.settings-btn svg{
+    fill: #333;
+    transform:scale(1.7);
+}
+.settings-btn.dark{
+      border:1px solid #ccc;
+}
+.settings-btn.dark svg{
+    fill: #ccc;
+}
     </style>
 
 </head>
@@ -325,6 +356,7 @@
 
     </span>
     </div></div>
+
 
 
 
