@@ -64,7 +64,7 @@ const DEFAULT_SETTINGS = {
     "enable_flashcard_creation":true,
     "flashcard_deck":null,
     "flashcards_add_picture":true
-}
+};
 
 const show_notification = (m) => {
     let notification = $(`<div class="custom-notification"><span>${m}</span></div>`);
@@ -75,7 +75,7 @@ const show_notification = (m) => {
     setTimeout(()=>{
         notification.animate({right: "-100%"},()=>{notification.remove()});
     },5000);
-}
+};
 
 let settings = DEFAULT_SETTINGS;
 
